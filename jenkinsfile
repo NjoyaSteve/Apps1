@@ -1,11 +1,36 @@
 pipeline {
     agent any
+
+    parameters {
+        string(name: 'GIT_URL', description: 'Enter the Git URL', defaultValue: 'https://github.com/NjoyaSteve/Apps1.git')
+        string(name: 'GIT_BRANCH', description: 'Enter the Git branch name', defaultValue: 'main')
+        credentials(name: 'GIT_CREDENTIALS_ID', description: 'Select the Git credentials', defaultValue: 'git-credentials')
+    }
+
     stages {
-        stage('Build'){
-            steps{
-                script{
-                    sh "ls -l"
+        stage('Cloning the repository') {
+            steps {
+                script {
+                    git branch: "${params.GIT_BRANCH}", credentialsId: "${params.GIT_CREDENTIALS_ID}", url: "${params.GIT_URL}"
                 }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Add your build steps here
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Add your test steps here
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Add your deployment steps here
             }
         }
     }
